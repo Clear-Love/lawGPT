@@ -1,0 +1,43 @@
+LOG_LEVEL: INFO
+
+DATABASE:
+  DRIVER: mysql+aiomysql
+  NAME: lawDB
+  HOST: 127.0.0.1
+  PORT: 3306
+  USERNAME: root
+  PASSWORD: 123456
+  PRINT_SQL: True
+  QUERY:
+    charset: utf8mb4
+
+REDIS:
+  HOST: 127.0.0.1
+  PORT: 6379
+  MAX_CONNECTIONS: 10
+
+MAIL:
+  HOST:
+  USERNAME:
+  PASSWORD: 
+  PORT:
+  FROM: 
+
+DATA:
+  DATA_DIR: './data'
+
+AUTH:
+  COOKIE_MAX_AGE: 259200
+  JWT_SECRET: 'SECRET_KEY'
+  JWT_LIFETIME_SECONDS: 259200
+  USER_SECRET: 'USER_SECRET'
+
+HOST: 127.0.0.1
+PORT: 8000
+EMBEDDING_MODEL: './model/ChatLaw-Text2Vec'  # 检索模型文件 or huggingface远程仓库
+LLM_MODEL: './model/chatglm2-6b'
+API_KEY: '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' # your_key if use openai
+VECDB_PATH: './cache/legal_article'
+DOCS_PATH: './docs'
+TOKEN_EXPIRE: 30
+USE_OPENAI: True

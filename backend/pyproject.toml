@@ -1,0 +1,52 @@
+[tool.poetry]
+name = "lawgpt"
+version = "0.1.0"
+description = "基于大模型的法律问答系统"
+authors = ["lmio <2091319361@qq.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+click = "^8.1.7"
+dynaconf = "^3.2.4"
+sqlalchemy = "^2.0.23"
+mysqlclient = "^2.2.0"
+pydantic = "^2.4.2"
+fastapi = "^0.104.1"
+uvicorn = "^0.24.0.post1"
+passlib = "^1.7.4"
+python-jose = "^3.3.0"
+sse-starlette = "^1.6.5"
+bcrypt = "^4.0.1"
+python-multipart = "^0.0.6"
+transformers = "^4.35.0"
+langchain = "^0.0.333"
+openai = "0.28.1"
+redis = "^5.0.1"
+torch = { version = "2.1.0", source="torch"}
+torchaudio = { version = "2.1.0", source="torch"}
+torchvision = { version = "0.16.0", source="torch"}
+fastapi-users-db-sqlalchemy = "^6.0.1"
+sentence-transformers = "^2.2.2"
+aiomysql = "^0.2.0"
+faiss-cpu = "^1.7.4"
+
+
+[[tool.poetry.source]]
+name = "torch"
+url = "https://download.pytorch.org/whl/cu118/"
+priority = "supplemental"
+ 
+ 
+[[tool.poetry.source]]
+name = "mirrors"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple/"
+priority = "default"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+lawgpt = "lawgpt.cmd.cmdline:main"

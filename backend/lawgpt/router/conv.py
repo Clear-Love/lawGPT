@@ -52,14 +52,14 @@ async def get_messages(conversation_id: str, request: CreateContentRequest, curr
     return content
 
 
-@router.post('/delete/{conversation_id}', description="删除对话")
+@router.delete('/delete/{conversation_id}', description="删除对话")
 async def delete_conversation(conversation_id: str, current_user: User = Depends(current_active_user)):
     conversation = await checkConversation(conversation_id, current_user)
     await _service.delete_conversation(conversation)
     return response(message="success")
 
 
-@router.post('/clear/{conversation_id}', description="删除对话")
+@router.delete('/clear/{conversation_id}', description="删除对话")
 async def delete_conversation(conversation_id: str, current_user: User = Depends(current_active_user)):
     conversation = await checkConversation(conversation_id, current_user)
     await _service.delete_history(conversation)

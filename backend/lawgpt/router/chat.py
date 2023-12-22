@@ -14,6 +14,8 @@ from lawgpt.utils.chatglm import ChatGLM
 from lawgpt.utils.user_manager import current_active_user
 from langchain.prompts import PromptTemplate
 from lawgpt.config import settings
+from langchain.chains import LLMChain
+from lawgpt.models.respModels import GenTitleRequest
 
 router = APIRouter()
 logger = get_logger(__name__)
@@ -36,6 +38,11 @@ TEMPLATE = """
 resp_prompt = PromptTemplate(
     input_variables=["query", "docs"],
     template=TEMPLATE
+)
+
+gen_prompt = PromptTemplate(
+    input_variables=["history"],
+    template="{history}, 总结一下上述对话，返回不超过15个字的标题，尽量简短"
 )
 
 
@@ -174,3 +181,23 @@ if __name__ == "__main__":
         history.append(ChatMessage(role='assistant', content=response))
 
     print("Goodbye!")
+
+
+@router.post('/conv/gen-title/{conversation_id}', response_model=GenTitleRequest)
+async def gen_title(conversation_id: str,
+                    request: List[ChatMessage],
+                    current_user: User = Depends(current_active_user)):
+    chatgpt_chain = LLMChain(
+        llm=chatglm,
+        prompt=gen_prompt,
+        verbose=True,
+    )
+    history = []
+    for i in range(0, len(request), 2):
+        if request[i].role == "user" and request[i+1].role == "assistant":
+            history.append([request[i].content,
+                            request[i+1].content])
+    title = str(chatgpt_chain.run(history=history))
+    title = title.removeprefix('：\n\n')
+    await _service.set_title(conversation_id, current_user.id, title)
+    return GenTitleRequest(title=title)

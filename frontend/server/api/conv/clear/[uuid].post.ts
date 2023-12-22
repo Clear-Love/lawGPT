@@ -12,7 +12,7 @@ export default defineEventHandler(async (event) => {
             baseURL: useRuntimeConfig().baseUrl,
             headers: headers
         })
-        const response = await axiosInstance.post(`/api/conv/clear/${conversation_id}`);
+        const response = await axiosInstance.delete(`/api/conv/clear/${conversation_id}`);
         setResStatus(event, response.status, response.statusText);
         return response.data;
     } catch (e: any) {

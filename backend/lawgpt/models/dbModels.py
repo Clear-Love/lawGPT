@@ -55,6 +55,7 @@ class Conversation(BaseModel):
 
     id: Mapped[str] = mapped_column(String(255), primary_key=True, nullable=False, comment='对话id')
     user_id: Mapped[int] = mapped_column(Integer, ForeignKey('user.id'), nullable=False, comment='所属用户id')
+    type: Mapped[str] = mapped_column(Enum('chat', 'search'), nullable=False, comment='对话类型')
     title: Mapped[str] = mapped_column(String(255), nullable=True, comment='标题')
     curr_content: Mapped[str] = mapped_column(String(255), nullable=True, comment="当前对话尾部节点")
     create_time: Mapped[Optional[datetime]] = mapped_column(UTCDateTime(timezone=True), server_default=func.now(), comment="创建时间")

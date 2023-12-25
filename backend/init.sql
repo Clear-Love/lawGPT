@@ -27,7 +27,7 @@ CREATE TABLE `content` (
   `conversation_id` varchar(255) NOT NULL COMMENT '所属对话id',
   `content` text NOT NULL COMMENT '内容',
   `create_time` timestamp NOT NULL DEFAULT (now()) COMMENT '生成时间',
-  `role` varchar(16) DEFAULT NULL COMMENT '角色',
+  `role` varchar(16) NOT NULL COMMENT '角色',
   `parent` varchar(255) DEFAULT NULL COMMENT '父结点',
   PRIMARY KEY (`id`),
   KEY `content_conversation_id_fk` (`conversation_id`),
@@ -60,6 +60,7 @@ CREATE TABLE `conversation` (
   `create_time` datetime NOT NULL DEFAULT (now()) COMMENT '创建时间',
   `update_time` datetime NOT NULL DEFAULT (now()) COMMENT '更新时间',
   `curr_content` varchar(255) DEFAULT NULL COMMENT '当前对话结点',
+  `type` varchar(16) NOT NULL COMMENT '对话类型',
   PRIMARY KEY (`id`),
   KEY `conversation_user_id_fk` (`user_id`),
   KEY `conversation_content_id_fk` (`curr_content`),
@@ -107,7 +108,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES ('admin',25,'2023-11-18 14:59:32','$2b$12$YDeTgtbIHO.yvRze/Qfwq.bFhLPATdTacLa42SEvxpYrvCAHsWGhS','123@123.com',1,0,'string',0,'2023-12-01 15:40:45','admin'),('lmio',26,'2023-12-01 10:30:04','$2b$12$dRSkG9hudiNZx0vtf4v6s.jvvct56LWu9KugcOAOkUhEtX5/3k8e.','2091319361@qq.com',1,0,'',0,'2023-12-01 14:31:47','lmio');
+INSERT INTO `user` VALUES ('admin',25,'2023-11-18 14:59:32','$2b$12$YDeTgtbIHO.yvRze/Qfwq.bFhLPATdTacLa42SEvxpYrvCAHsWGhS','123@123.com',1,0,'string',0,'2023-12-23 07:59:08','admin'),('lmio',26,'2023-12-01 10:30:04','$2b$12$dRSkG9hudiNZx0vtf4v6s.jvvct56LWu9KugcOAOkUhEtX5/3k8e.','2091319361@qq.com',1,0,'',0,'2023-12-01 14:31:47','lmio');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -120,4 +121,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-12-20 13:16:40
+-- Dump completed on 2023-12-23 18:20:32

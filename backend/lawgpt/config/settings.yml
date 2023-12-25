@@ -35,7 +35,7 @@ AUTH:
 HOST: 127.0.0.1
 PORT: 8000
 EMBEDDING_MODEL: './model/ChatLaw-Text2Vec'  # 检索模型文件 or huggingface远程仓库
-LLM_MODEL: './model/chatglm2-6b'
+LLM_MODEL: './model/chatglm2-6b' # 使用openaiapikey可以不填写
 API_KEY: '' # your_key if use openai
 VECDB_PATH: './cache/legal_article'
 DOCS_PATH: './docs'

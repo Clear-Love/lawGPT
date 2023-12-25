@@ -56,6 +56,7 @@ class UpdateUserSchema(BaseModel):
 # 对话
 class BaseConversation(InDBMixin):
     title: Optional[str]
+    type: Literal["chat", "search"]
 
 
 class ConversationSchema(BaseConversation):
@@ -72,6 +73,7 @@ class CreateConversationSchema(BaseConversation):
 
 class CreateConversationRequset(BaseModel):
     title: str
+    type: Literal["chat", "search"]
 
 
 class UpdateConversationSchema(BaseConversation):

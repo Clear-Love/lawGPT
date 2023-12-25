@@ -12,10 +12,12 @@ export interface ConversationOption {
   title?: string;
   create_time?: Date;
   update_time?: Date;
+  type: 'chat' | 'search';
 }
 
 export interface CreateConversationRequest {
   title: string;
+  type: 'chat' | 'search';
 }
 
 export interface ConversationHistory {

@@ -16,6 +16,7 @@ from langchain.prompts import PromptTemplate
 from lawgpt.config import settings
 from langchain.chains import LLMChain
 from lawgpt.models.respModels import GenTitleRequest
+from lawgpt.models.respModels import SearchResponse
 
 router = APIRouter()
 logger = get_logger(__name__)
@@ -201,3 +202,17 @@ async def gen_title(conversation_id: str,
     title = title.removeprefix('：\n\n')
     await _service.set_title(conversation_id, current_user.id, title)
     return GenTitleRequest(title=title)
+
+
+@router.post("/search/{conversation_id}", response_model=SearchResponse)
+async def chat_search(conversation_id: str,
+                      request: ChatCompletionRequest,
+                      current_user: User = Depends(current_active_user)
+                      ):
+    conversation = await _service.get_conversation_by_id(conversation_id=conversation_id)
+    if not conversation or current_user.id != conversation.user_id or not request.messages or request.messages[-1].role != "user":
+        raise HTTPException(status_code=502, detail="Invalid request")
+    query = request.messages[-1].content
+    docs = vecDB.get_knowledge(query, top_k=request.top_k)
+    query = str(resp_prompt.format_prompt(query=query, docs=docs))
+    return SearchResponse(docs=docs)

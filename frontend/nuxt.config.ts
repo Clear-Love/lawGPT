@@ -21,7 +21,8 @@ export default defineNuxtConfig({
       defaultTop_k: "4",
       defaultTop_p: "1",
       defaultMax_length: "2140",
-      defaultHistory_length: "10"
+      defaultHistory_length: "10",
+      defaultSearchTop_k: "6"
     },
   },
   modules: [

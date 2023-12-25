@@ -25,7 +25,7 @@ async def checkConversation(conversation_id: str, current_user: User) -> Convers
 @router.post('/new', response_model=ConversationSchema, description="新建对话")
 async def new_conversation(request: CreateConversationRequset, current_user: User = Depends(current_active_user)):
     try:
-        converaation = await _service.new_conversation(CreateConversationSchema(id= str(uuid4()), title=request.title, user_id=current_user.id))
+        converaation = await _service.new_conversation(CreateConversationSchema(id= str(uuid4()), title=request.title, user_id=current_user.id, type=request.type))
     except Exception as e:
         logger.error(e)
         raise HTTPException(status_code=500, detail="Internal Server Error")

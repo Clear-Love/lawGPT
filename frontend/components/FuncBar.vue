@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import { Plus, Setting, Github, Logout} from "@icon-park/vue-next";
+import { Plus, Setting, Github, Logout, Search} from "@icon-park/vue-next";
 import { useChatStore } from "@/stores/chat";
 import useUserStore from "~/stores/auth";
 
@@ -22,6 +22,7 @@ const auth = useUserStore()
 
 const funcs = [
   { type: "chat", icon: Plus },
+  { type: 'search', icon: Search},
   { type: "setting", icon: Setting },
   { type: "github", icon: Github },
   { type: "logout", icon: Logout}
@@ -29,7 +30,10 @@ const funcs = [
 
 async function clickBtn(type: string) {
   if (type === "chat") {
-    store.createConversation();
+    store.createConversation('chat');
+    toggleSideBar();
+  }else if (type == 'search') {
+    store.createConversation('search')
     toggleSideBar();
   } else if (type === "setting") {
     store.showSetting = true;

@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import type {
-   ChatMessage, ConversationItem, CreateConversationRequest, ConversationHistory, ChatMessageItem, ChatCompletionRequest, ErrorResponse, ConversationUpdate
+   ChatMessage, ConversationItem, CreateConversationRequest, ConversationHistory, ChatMessageItem, ChatCompletionRequest, ErrorResponse, ConversationUpdate, SearchResponse
 } from "@/types";
 
 export const useChatStore = defineStore("chat", () => {
@@ -50,14 +50,15 @@ export const useChatStore = defineStore("chat", () => {
     conversation.value = undefined
   }
 
-  async function createConversation() {
+  async function createConversation(type: 'chat'|'search') {
     conversation.value = undefined;
     const convItem = (await $fetch(
       '/api/conv/new',
       {
         method: 'POST',
         body: JSON.stringify({
-          title: "new chat"
+          title: "new chat",
+          type: type,
         } as CreateConversationRequest)
       }
     )) as ConversationItem
@@ -138,7 +139,6 @@ export const useChatStore = defineStore("chat", () => {
 
   async function gen_title(conversationId: string) {
     const msg = messages.value.map(({ role, content }) => { return { role: role, content: content } as ChatMessage })
-    console.log(msg)
     await fetch(
       `/api/conv/gen-title/${conversationId}`,
       {
@@ -178,6 +178,62 @@ export const useChatStore = defineStore("chat", () => {
     return res
   }
 
+  async function search(message: ChatMessage, conversation_id: string) {
+    const setting = loadSetting();
+    if (!setting) {
+      showSetting.value = true;
+      return;
+    }
+    startTalking(conversation_id)
+    // 开始对话 (start a conversation)
+    clearSendMessageContent();
+
+    // 追加到消息队列 (append to message queue)
+    const len = messages.value.push(await createMessage(conversation_id, message as ChatMessage) as ChatMessageItem)
+    let content = "";
+    try {
+      const response = await fetch(`/api/search/${conversation_id}`, {
+        method: "post",
+        body: JSON.stringify({
+          model: "",
+          messages: [messages.value[len - 1]],
+          temperature: setting.temperature || Number(runtimeConfig.public.defaultTemperature),
+          stream: true,
+          top_p: setting.top_p || Number(runtimeConfig.public.defaultTop_p),
+          top_k: setting.search_top_k || Number(runtimeConfig.public.defaultSearchTop_k),
+          max_length: setting.max_length || Number(runtimeConfig.public.defaultMax_length),
+        } as ChatCompletionRequest),
+      });
+
+      messages.value.push({
+        role: "assistant",
+        content: "",
+      } as ChatMessageItem);
+
+      if (response.ok) {
+        const data: SearchResponse = await response.json();
+        content = data.docs.map((str, index) => `${index + 1}. ${str}`).join("\n");;
+        messages.value[len].content = content;
+      } else {
+        const data: ErrorResponse = await response.json();
+        console.log(data.detail);
+        content = data.detail;
+        messages.value[len].content = content;
+      }
+    } catch (error: any) {
+      console.log(error);
+      messages.value[len - 1].content = error.message;
+    } finally {
+      endTalking(conversation_id);
+    }
+
+    await createMessage(conversation_id, { content: content, role: 'assistant' } as ChatMessage);
+
+    if (messages.value.length == 2 || messages.value.length % 10 == 0) {
+      gen_title(conversation_id);
+    }
+  }
+
   async function sendMessage(message: ChatMessage) {
     if (talking.value) return;
     if (!message?.content.trim()) return;
@@ -185,7 +241,12 @@ export const useChatStore = defineStore("chat", () => {
     let conversationId = conversation.value?.id;
   
     if (!conversationId) {
-      conversationId = await createConversation()
+      conversationId = await createConversation('chat')
+    }
+
+    if (conversation.value?.type == 'search') {
+      await search(message, conversationId)
+      return
     }
 
     const setting = loadSetting();
@@ -284,7 +345,6 @@ export const useChatStore = defineStore("chat", () => {
       const msg = await createMessage(conversationId, {content: content, role: 'assistant'} as ChatMessage)
       console.log(msg)
       messages.value[len - 1] = msg
-      console.log(messages.value.length)
       if (messages.value.length == 2 || messages.value.length%10 == 0) {
         gen_title(conversationId)
       }

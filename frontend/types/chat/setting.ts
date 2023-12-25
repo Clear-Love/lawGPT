@@ -15,6 +15,7 @@ export interface ConversationSetting {
   top_p?: number;
   max_length?: number;
   history_length: number;
+  search_top_k: number;
   temperature: number;
   locale: string;
   colorMode: ColorMode;

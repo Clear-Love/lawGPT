@@ -16,6 +16,7 @@ from lawgpt.utils.user_manager import current_active_user
 from langchain.chains import LLMChain
 from langchain.llms import OpenAI
 from lawgpt.models.respModels import GenTitleRequest
+from lawgpt.models.respModels import SearchResponse
 
 router = APIRouter()
 logger = get_logger(__name__)
@@ -26,7 +27,7 @@ openai.api_key = settings.API_KEY
 
 TEMPLATE = """
             {docs}
-            以上是问题相关的法律条文，你现在将扮演一名专业的中国法律助手给用户提供法律咨询，并在回答中引用法律条文，如果法律条文未与问题内容相关则无视该法律条文，请用上述法律条文作为回答的依据回答以下问题，问题是：
+            根据以上法律条文作为回答的依据，并在回答中引用使用到的法律条文，如果法律条文未与问题内容相关则无视该法律条文，问题是：
             “{query}”
         """
 resp_prompt = PromptTemplate(
@@ -51,10 +52,11 @@ async def create_chat_completion(conversation_id: str,
     query = request.messages[-1].content
     docs = vecDB.get_knowledge(query, top_k=request.top_k)
     query = str(resp_prompt.format_prompt(query=query, docs=docs))
+    request.messages[-1].content = query
     messages = [msg.model_dump() for msg in request.messages]
     logger.info(f'查询到的topk文档{docs}')
     response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo-16k-0613",
+        model="gpt-3.5-turbo",
         messages=messages,
         top_p=request.top_p,
         temperature=request.temperature,
@@ -99,3 +101,17 @@ async def gen_title(conversation_id: str,
     title = title.removeprefix('：\n\n')
     await _service.set_title(conversation_id, current_user.id, title)
     return GenTitleRequest(title=title)
+
+
+@router.post("/search/{conversation_id}", response_model=SearchResponse)
+async def chat_search(conversation_id: str,
+                    request: ChatCompletionRequest,
+                    current_user: User = Depends(current_active_user)
+                    ):
+    conversation = await _service.get_conversation_by_id(conversation_id=conversation_id)
+    if not conversation or current_user.id != conversation.user_id or not request.messages or request.messages[-1].role != "user":
+        raise HTTPException(status_code=502, detail="Invalid request")
+    query = request.messages[-1].content
+    docs = vecDB.get_knowledge(query, top_k=request.top_k)
+    query = str(resp_prompt.format_prompt(query=query, docs=docs))
+    return SearchResponse(docs=docs)

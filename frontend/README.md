@@ -1,24 +1,3 @@
-# chatgpt-nuxt
-
-![preview](/assets/preview-en.png)
-
-ENGLISH | [简体中文](/docs/README-CN.md) | [日本語](/docs/README-JA.md)
-
-This is a frontend application implemented in [Nuxt 3](https://nuxt.com/) for OpenAI's [ChatGPT](https://openai.com/blog/chatgpt) and [DALL·E](https://openai.com/dall-e-2) API.
-
-## Supported APIs
-
-- [OpenAI API](https://openai.com/blog/openai-api)
-- [Azure Open AI Service API](https://learn.microsoft.com/en-us/azure/cognitive-services/openai/reference)
-
-## Supported Models
-
-- Chat completion
-  - gpt-4
-  - gpt-3.5-turbo
-- Image generation
-  - DALL·E
-
 ## Setup
 
 To begin, please ensure you have installed all dependencies:
@@ -73,8 +52,7 @@ One-line command for quick deployment:
 docker run -d \
   -p 80:3000 \
   --restart unless-stopped \
-  --name chatgpt-nuxt \
-  lianginx/chatgpt-nuxt:latest
+  --name lawgpt-ui
 ```
 
 To deploy using Docker Compose:

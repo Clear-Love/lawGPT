@@ -8,7 +8,7 @@
   },
   "ChatList": {
     "conversations": "对话",
-    "images": "图片"
+    "searchs": "法律检索"
   },
   "ChatSendBar": {
     "placeholder": "输入消息，Enter 发送，Shift + Enter 换行",
@@ -19,10 +19,13 @@
     "label": "发送"
   },
   "ChatSetting": {
+    "searchs": "法律检索",
+    "conversations": "法律问答",
     "top_k": "top_k",
     "top_p": "top_p",
     "temperature": "temperature",
     "history_length": "附带历史消息数",
+    "search_top_k": "法律检索返回的相似法律条文数",
     "language": "语言",
     "colorMode": {
       "label": "配色",
@@ -50,6 +53,7 @@
       "examples": [
         {
           "title": "租房中介不退押金怎么办”",
+          "type": "chat",
           "message": {
             "role": "user",
             "content": "租房中介不退押金怎么办”"
@@ -57,6 +61,7 @@
         },
         {
           "title": "公司强制加班不给加班费是否违法",
+          "type": "chat",
           "message": {
             "role": "user",
             "content": "公司强制加班不给加班费是否违法"
@@ -64,6 +69,7 @@
         },
         {
           "title": "离婚后子女抚养费怎么算",
+          "type": "chat",
           "message": {
             "role": "user",
             "content": "离婚后子女抚养费怎么算"
@@ -71,6 +77,7 @@
         },
         {
           "title": "被车撞了对方不赔偿怎么办”",
+          "type": "chat",
           "message": {
             "role": "user",
             "content": "被车撞了对方不赔偿怎么办”"
@@ -83,6 +90,7 @@
       "examples": [
         {
           "title": "未经房东同意转租房屋是否犯法",
+          "type": "chat",
           "message": {
             "role": "user",
             "content": "未经房东同意转租房屋是否犯法"
@@ -90,6 +98,7 @@
         },
         {
           "title": "企业拖欠工资怎么办",
+          "type": "chat",
           "message": {
             "role": "user",
             "content": "企业拖欠工资怎么办"
@@ -97,6 +106,7 @@
         },
         {
           "title": "我购买的商品存在质量问题，我应该如何维护我的消费者权益？",
+          "type": "chat",
           "message": {
             "role": "user",
             "content": "我购买的商品存在质量问题，我应该如何维护我的消费者权益？"
@@ -104,6 +114,7 @@
         },
         {
           "title": "我的创意被他人盗用，我应该保护自己的知识产权吗？",
+          "type": "chat",
           "message": {
             "role": "user",
             "content": "我的创意被他人盗用，我应该保护自己的知识产权吗？"
@@ -112,34 +123,38 @@
       ]
     },
     "casualChat": {
-      "title": "法律问题",
+      "title": "法律检索",
       "examples": [
         {
-          "title": "我的言论受到限制，我应该了解自己的言论自由权利吗？",
+          "title": "请问夫妻之间共同财产如何定义？",
+          "type": "search",
           "message": {
             "role": "user",
-            "content": "我的言论受到限制，我应该了解自己的言论自由权利吗？"
+            "content": "请问夫妻之间共同财产如何定义？"
           }
         },
         {
-          "title": "我租赁的公寓存在严重的维修问题，我应该如何维护我的权益？",
+          "title": "请问民间借贷的利息有什么限制",
+          "type": "search",
           "message": {
             "role": "user",
-            "content": "我租赁的公寓存在严重的维修问题，我应该如何维护我的权益？"
+            "content": "请问民间借贷的利息有什么限制"
           }
         },
         {
-          "title": "我在工作中遭受了性骚扰，我应该采取什么措施来保护自己？",
+          "title": "性骚扰如何量刑？",
+          "type": "search",
           "message": {
             "role": "user",
-            "content": "我在工作中遭受了性骚扰，我应该采取什么措施来保护自己？"
+            "content": "性骚扰如何量刑？"
           }
         },
         {
-          "title": "我在互联网上发布的内容遭到他人的诽谤，我应该采取什么法律行动？",
+          "title": "诽谤罪如何定义？",
+          "type": "search",
           "message": {
             "role": "user",
-            "content": "我在互联网上发布的内容遭到他人的诽谤，我应该采取什么法律行动？"
+            "content": "诽谤罪如何定义？"
           }
         }
       ]
@@ -151,7 +166,7 @@
   },
   "FuncBar": {
     "chat": "新建聊天",
-    "image": "新图片",
+    "search": "法律检索",
     "setting": "设置",
     "github": "查看项目",
     "logout": "退出登录"

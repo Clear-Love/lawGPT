@@ -1,5 +1,8 @@
 <template>
   <div class="flex flex-col p-6 space-y-6 overflow-y-scroll">
+    <div class="m-6 mb-2 text-sm text-slate-500">
+      {{ $t("ChatSetting.conversations") }}
+    </div>
     <!-- temperature -->
     <div>
       <label class="space-x-3">
@@ -55,6 +58,23 @@
         step="0.1"
       />
     </div>
+    <div class="m-6 mb-2 text-sm text-slate-500">
+      {{ $t("ChatSetting.searchs") }}
+    </div>
+    <!-- top_k -->
+      <div>
+        <label class="space-x-3">
+          <span>{{ $t("ChatSetting.search_top_k") }}</span>
+          <span>{{ setting.search_top_k }}</span>
+        </label>
+        <input
+          type="range"
+          v-model.number="setting.search_top_k"
+          min="4"
+          max="10"
+          step="1"
+        />
+      </div>
     <!-- language -->
     <div>
       <label class="space-x-3">
@@ -105,6 +125,7 @@ const setting = ref<ConversationSettingOption>({
   max_length : Number(runtimeConfig.public.defaultMax_length),
   temperature: Number(runtimeConfig.public.defaultTemperature),
   history_length: Number(runtimeConfig.public.defaultHistory_length),
+  search_top_k: Number(runtimeConfig.public.defaultSearchTop_k),
   locale: i18n.getBrowserLocale()!,
   colorMode: "system",
   type: "global",

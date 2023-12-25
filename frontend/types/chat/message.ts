@@ -17,3 +17,7 @@ export interface ChatMessageResponse extends ChatMessage {
   parent: string;
   create_time?: number;
 }
+
+export interface SearchResponse {
+  docs: string[]
+}

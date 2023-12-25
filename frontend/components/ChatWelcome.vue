@@ -12,7 +12,7 @@
       <div
         class="flex justify-center items-center p-2 h-20 rounded bg-slate-100 dark:bg-slate-800 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-600 text-center cursor-pointer"
         v-for="exa of ($tm(`ChatWelcome.${item.id}.examples`) as ChatMessageTemplate[])"
-        @click="sendMessage(exa.message)"
+        @click="sendMessage(exa.message, exa.type)"
       >
         {{ $rt(exa.title) }}
       </div>
@@ -22,13 +22,14 @@
 </template>
 
 <script setup lang="ts">
-import { Tool, SunOne, Chip } from "@icon-park/vue-next";
+import { Tool, Chip, Search } from "@icon-park/vue-next";
 import type { Icon } from "@icon-park/vue-next/lib/runtime";
 import { useChatStore } from "@/stores/chat";
 import type { ChatMessage, ChatRole } from "@/types";
 
 interface ChatMessageTemplate {
   title: string;
+  type: 'chat' | 'search';
   message: ChatMessage;
 }
 
@@ -51,11 +52,14 @@ const examples: ChatMessageTemplateGroup[] = [
   },
   {
     id: "casualChat",
-    icon: SunOne,
+    icon: Search,
   },
 ];
 
-function sendMessage(message: ChatMessage) {
+async function sendMessage(message: ChatMessage, type: 'chat' | 'search') {
+  if (!store.conversation) {
+    await store.createConversation(i18n.rt(type) as 'chat' | 'search')
+  }
   store.sendMessage({
     role: i18n.rt(message.role) as ChatRole,
     content: i18n.rt(message.content),

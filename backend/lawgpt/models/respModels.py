@@ -25,6 +25,9 @@ class ChatCompletionResponse(BaseModel):
                         ChatCompletionResponseStreamChoice]]
     created: Optional[int] = Field(default_factory=lambda: int(time.time()))
 
+class SearchResponse(BaseModel):
+    docs: List[str]
+
 class ConversationHistory(BaseModel):
     conversation_id: str
     messages: Dict[str, ContentSchema]

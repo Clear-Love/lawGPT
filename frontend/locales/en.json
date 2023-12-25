@@ -8,7 +8,7 @@
   },
   "ChatList": {
     "conversations": "Conversations",
-    "images": "Images"
+    "searchs": "law search"
   },
   "ChatSendBar": {
     "placeholder": "Type a message and press [Enter] to send, press [Shift]+[Enter] to start a new line.",
@@ -19,10 +19,13 @@
     "label": "Send"
   },
   "ChatSetting": {
+    "searchs": "Legal search",
+    "conversations": "Legal Q&A",
     "top_k": "top_k",
     "top_p": "top_p",
     "temperature": "temperature",
     "history_length": "With the number of historical messages",
+    "search_top_k": "Number of similar legal provisions returned by legal search",
     "language": "Language",
     "colorMode": {
       "label": "Color",
@@ -46,100 +49,112 @@
   },
   "ChatWelcome": {
     "tool": {
-      "title": "Tool",
+      "title": "Legal Consultation",
       "examples": [
         {
-          "title": "How to send HTTP requests using Javascript?",
+          "title": "What to do if the rental agency refuses to return the deposit",
+          "type": "chat",
           "message": {
             "role": "user",
-            "content": "How to send HTTP requests using Javascript?"
+            "content": "What to do if the rental agency refuses to return the deposit"
           }
         },
         {
-          "title": "Translation: 你好，快乐的世界！",
+          "title": "Is it illegal for a company to enforce overtime without overtime pay",
+          "type": "chat",
           "message": {
             "role": "user",
-            "content": "Translation: 你好，快乐的世界！"
+            "content": "Is it illegal for a company to enforce overtime without overtime pay"
           }
         },
         {
-          "title": "Variable Naming: Retrieving User Information.",
+          "title": "How is child support calculated after divorce",
+          "type": "chat",
           "message": {
-            "role": "system",
-            "content": "Variable Naming: Retrieving User Information."
+            "role": "user",
+            "content": "How is child support calculated after divorce"
           }
         },
         {
-          "title": "Unsplash Image Generator",
+          "title": "What to do if the other party doesn't compensate for a car accident",
+          "type": "chat",
           "message": {
-            "role": "system",
-            "content": "Please reply using the format of '![image]https://source.unsplash.com/featured/?<translated English content>' and append the original link. Do not use code blocks, do not describe other content, and do not explain. Generate the corresponding format based on what I enter. If you understand, please reply with 'Please tell me what image you need?'"
+            "role": "user",
+            "content": "What to do if the other party doesn't compensate for a car accident"
           }
         }
       ]
     },
     "rolePlaying": {
-      "title": "Role Playing",
+      "title": "Multi-turn Q&A",
       "examples": [
         {
-          "title": "Act as an English translator and improver",
+          "title": "Is it illegal to sublet a property without the landlord's consent",
+          "type": "chat",
           "message": {
-            "role": "system",
-            "content": "I hope you can take on the role of English translator, spelling checker and rhetoric improver. I will communicate with you in any language, and you will recognize the language, translate it, and respond to me in more elegant and refined English. Please replace my simple vocabulary and sentences with more beautiful and graceful expressions, ensuring that the meaning remains unchanged but is more literary. Please only answer the corrected and improved parts without writing explanations. If you understand, please reply: OK!"
+            "role": "user",
+            "content": "Is it illegal to sublet a property without the landlord's consent"
           }
         },
         {
-          "title": "Play as Yann LeCun - Programming/Algorithm Design Expert",
+          "title": "What to do if an enterprise withholds wages",
+          "type": "chat",
           "message": {
-            "role": "system",
-            "content": "You are an AI clone of Yann LeCun, an expert in programming and algorithm design. Remember that the person who asked you this question is Yann LeCun, who is very skeptical of the power of artificial intelligence like yourself."
+            "role": "user",
+            "content": "What to do if an enterprise withholds wages"
           }
         },
         {
-          "title": "Play the role of a psychologist",
+          "title": "I purchased a product with quality issues, how can I protect my consumer rights",
+          "type": "chat",
           "message": {
-            "role": "system",
-            "content": "I want you to play the role of a psychologist. I will provide you with someone seeking guidance and advice to manage their emotional, stress, anxiety, and other mental health issues. You should use your knowledge of cognitive-behavioral therapy, meditation techniques, mindfulness practices, and other therapeutic approaches to develop individualized strategies that can be implemented to improve their overall health. If you understand, please reply with 'Okay, can we talk?'"
+            "role": "user",
+            "content": "I purchased a product with quality issues, how can I protect my consumer rights"
           }
         },
         {
-          "title": "Play the role of a tarot card reader.",
+          "title": "My creative work has been plagiarized, should I protect my intellectual property",
+          "type": "chat",
           "message": {
-            "role": "system",
-            "content": "I would like you to play the role of a tarot reader. You will receive my question and use virtual tarot cards to perform a tarot reading. Don't forget to shuffle and introduce the deck you will be using. I will ask you for 3 numbers to see if I should draw the cards myself, or if not, please draw random cards for me. After receiving the cards, please explain their meanings in detail, explain which card belongs to the future, present, or past, relate them to my question, and give me useful advice or tell me what I should do now."
+            "role": "user",
+            "content": "My creative work has been plagiarized, should I protect my intellectual property"
           }
         }
       ]
     },
     "casualChat": {
-      "title": "Casual Chat",
+      "title": "Legal Search",
       "examples": [
         {
-          "title": "Do you have any ideas for a 10th birthday?",
+          "title": "How is common property defined between spouses",
+          "type": "search",
           "message": {
             "role": "user",
-            "content": "Do you have any ideas for a 10th birthday?"
+            "content": "How is common property defined between spouses"
           }
         },
         {
-          "title": "What kind of person was Socrates?",
+          "title": "Are there any restrictions on interest rates for private loans",
+          "type": "search",
           "message": {
             "role": "user",
-            "content": "What kind of person was Socrates?"
+            "content": "Are there any restrictions on interest rates for private loans"
           }
         },
         {
-          "title": "How to make tomato beef brisket?",
+          "title": "How is sexual harassment sentenced",
+          "type": "search",
           "message": {
             "role": "user",
-            "content": "How to make tomato beef brisket?"
+            "content": "How is sexual harassment sentenced"
           }
         },
         {
-          "title": "Tell me a story, please.",
+          "title": "How is defamation defined as a crime",
+          "type": "search",
           "message": {
             "role": "user",
-            "content": "Tell me a story, please."
+            "content": "How is defamation defined as a crime"
           }
         }
       ]
@@ -151,7 +166,7 @@
   },
   "FuncBar": {
     "chat": "New Chat",
-    "image": "New Image",
+    "search": "Legal search",
     "setting": "Setting",
     "github": "Project",
     "logout": "Logout"

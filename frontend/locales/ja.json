@@ -166,7 +166,7 @@
   },
   "FuncBar": {
     "chat": "新規チャット",
-    "image": "新規イメージ",
+    "search": "新規イメージ",
     "setting": "設定",
     "github": "プロジェクト",
     "logout": "サインアウト"

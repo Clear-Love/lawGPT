@@ -22,7 +22,7 @@ const auth = useUserStore()
 
 const funcs = [
   { type: "chat", icon: Plus },
-  { type: 'search', icon: Push},
+  { type: 'search', icon: Plus},
   { type: "setting", icon: Setting },
   { type: "github", icon: Github },
   { type: "logout", icon: Logout}

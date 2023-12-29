@@ -31,9 +31,11 @@ const funcs = [
 async function clickBtn(type: string) {
   if (type === "chat") {
     store.createConversation('chat');
+    store.messages = []
     toggleSideBar();
   }else if (type == 'search') {
     store.createConversation('search')
+    store.messages = []
     toggleSideBar();
   } else if (type === "setting") {
     store.showSetting = true;

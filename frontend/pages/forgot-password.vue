@@ -1,7 +1,7 @@
 <template>
-  <div class="DaoRb" v-if="!valid">
-    <h1 class="eSHwvX">忘记密码</h1>
-    <form @submit.prevent="resetPassword">
+  <div class="DaoRb">
+    <h1 class="eSHwvX">{{ valid? "设定新密码": "忘记密码" }}</h1>
+    <form @submit.prevent="resetPassword" v-if="!valid">
       <ErrorAlert :error-msg="authError" @clearError="clearError" />
       <SuccessAlert :success-msg="authSuccess" @clearSuccess="clearSuccess" />
       <div class="jGQTZC">
@@ -21,11 +21,7 @@
         </svg>
       </button>
     </form>
-  </div>
-
-  <div class="DaoRb" v-if="valid">
-    <h1 class="eSHwvX">设定新密码</h1>
-    <form @submit.prevent="updatepassword">
+    <form @submit.prevent="updatepassword" v-if="valid">
       <ErrorAlert :error-msg="authError" @clearError="clearError" />
       <SuccessAlert :success-msg="authSuccess" @clearSuccess="clearSuccess" />
       <div class="jGQTZC">
@@ -135,7 +131,7 @@ const updatepassword = async () => {
       setTimeout(() => {
         authSuccess.value = ''
         navigateTo('/login')
-      }, 5000)
+      }, 2000)
     }else {
       response.json().then((data: ErrorResponse) => {
         authError.value = data.detail

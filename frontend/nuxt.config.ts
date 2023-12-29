@@ -15,7 +15,7 @@ export default defineNuxtConfig({
     }
   },
   runtimeConfig: {
-    baseUrl: "http://127.0.0.1:9000",
+    baseUrl: "http://127.0.0.1:8000",
     public: {
       defaultTemperature: "1",
       defaultTop_k: "4",

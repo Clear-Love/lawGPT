@@ -42,6 +42,7 @@ async def logout(
         strategy: Strategy[User, int] = Depends(auth_backend.get_strategy),
 ):
     user, token = user_token
+    logger.info(token)
     resp = await auth_backend.logout(strategy, user, token)
     return response(200, headers=resp.headers)
 

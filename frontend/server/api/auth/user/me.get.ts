@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
                 responseType: "json",
                 timeout: 1000 * 20,
                 timeoutErrorMessage: "**Network connection timed out. Please try again**",
-                baseURL: process.env.NUXT_BASE_URL,
+                baseURL: useRuntimeConfig().baseUrl,
                 headers: headers
             })
         const response = await axiosInstance.get<UserResponse>('/api/auth/user/me')

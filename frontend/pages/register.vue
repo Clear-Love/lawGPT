@@ -1,28 +1,32 @@
 <template>
   <div class="DaoRb">
     <h1 class="eSHwvX">注 册</h1>
-    <form @submit.prevent="register">
+    <form @submit.prevent="handleClick">
+        <ErrorAlert :error-msg="authError" @clearError="clearError" />
+        <SuccessAlert :success-msg="authSuccess" @clearSuccess="clearSuccess" />
+        <div class="jGQTZC">
+          <label class="iJLvzO">
+            <div class="fdCSlG">
+              <input class="cmCuLh" type="text" placeholder="邮箱" v-model="email"/>
+            </div>
+          </label>
+        </div>
+        <div class="jGQTZC">
+          <button class="gZMQdu" type="button" :disabled="loading">
+            <div class="bjhGPG" :class="{ loading: loading }">获取验证码</div>
+            <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="jjoFVh" :class="{ loading: loading }">
+              <g fill="none" stroke-width="1.5" stroke-linecap="round" class="faEWLr" style="stroke: var(--icon-color);">
+                <circle stroke-opacity=".2" cx="8" cy="8" r="6"></circle>
+                <circle cx="8" cy="8" r="6" class="VFMrX"></circle>
+              </g>
+            </svg>
+          </button>
+        </div>
+    </form>
+    <form @submit.prevent="register" v-if="valid">
       <ErrorAlert :error-msg="authError" @clearError="clearError" />
       <SuccessAlert :success-msg="authSuccess" @clearSuccess="clearSuccess" />
-      <div class="jGQTZC" v-if="!valid">
-        <label class="iJLvzO">
-          <div class="fdCSlG">
-            <input class="cmCuLh" type="text" placeholder="邮箱" v-model="email" />
-          </div>
-        </label>
-      </div>
-      <div class="jGQTZC" v-if="!valid">
-        <button class="gZMQdu" type="button" :disabled="loading" @click="handleClick">
-          <div class="bjhGPG" :class="{ loading: loading }">获取验证码</div>
-          <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="jjoFVh" :class="{ loading: loading }">
-            <g fill="none" stroke-width="1.5" stroke-linecap="round" class="faEWLr" style="stroke: var(--icon-color);">
-              <circle stroke-opacity=".2" cx="8" cy="8" r="6"></circle>
-              <circle cx="8" cy="8" r="6" class="VFMrX"></circle>
-            </g>
-          </svg>
-        </button>
-      </div>
-      <div class="jGQTZC" v-if="valid">
+      <div class="jGQTZC">
         <label class="iJLvzO">
           <div class="fdCSlG">
             <input class="cmCuLh" type="text" placeholder="用户名" v-model="username" />
@@ -44,7 +48,7 @@
           </div>
         </label>
       </div>
-      <div class="jGQTZC" v-if="valid">
+      <div class="jGQTZC">
         <button class="gZMQdu" type="submit" :disabled="loading">
           <div class="bjhGPG" :class="{loading: loading}">注 册</div>
           <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="jjoFVh" :class="{loading: loading}">
@@ -167,7 +171,7 @@ const register = async () => {
       setTimeout(() => {
         authSuccess.value = ''
         navigateTo('/login')
-      }, 5000)
+      }, 2000)
     } else {
       response.json().then((data: ErrorResponse) => {
         const detail = data.detail;

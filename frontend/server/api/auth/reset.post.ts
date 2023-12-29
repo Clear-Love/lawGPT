@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
         const headers = getHeaders(event);
         headers['Content-Type'] = 'application/json'
         const axiosInstance = createAxiosInstance({
-            responseType: "stream",
+            responseType: "json",
             timeout: 1000 * 20,
             timeoutErrorMessage: "**Network connection timed out. Please try again**",
             baseURL: useRuntimeConfig().baseUrl,

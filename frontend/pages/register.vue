@@ -1,7 +1,7 @@
 <template>
   <div class="DaoRb">
     <h1 class="eSHwvX">注 册</h1>
-    <form @submit.prevent="handleClick">
+    <form @submit.prevent="handleClick" v-if="!valid">
         <ErrorAlert :error-msg="authError" @clearError="clearError" />
         <SuccessAlert :success-msg="authSuccess" @clearSuccess="clearSuccess" />
         <div class="jGQTZC">
@@ -12,7 +12,7 @@
           </label>
         </div>
         <div class="jGQTZC">
-          <button class="gZMQdu" type="button" :disabled="loading">
+          <button class="gZMQdu" type="submit" :disabled="loading">
             <div class="bjhGPG" :class="{ loading: loading }">获取验证码</div>
             <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="jjoFVh" :class="{ loading: loading }">
               <g fill="none" stroke-width="1.5" stroke-linecap="round" class="faEWLr" style="stroke: var(--icon-color);">

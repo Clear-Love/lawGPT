@@ -1,5 +1,5 @@
 # 设置基础镜像 Set up base image
-FROM node:slim
+FROM node:18.12.0
 
 # 设置工作目录 Set working directory
 WORKDIR /app

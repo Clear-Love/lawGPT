@@ -53,7 +53,10 @@ async def create_chat_completion(conversation_id: str,
     docs = vecDB.get_knowledge(query, top_k=request.top_k)
     query = str(resp_prompt.format_prompt(query=query, docs=docs))
     request.messages[-1].content = query
-    messages = [msg.model_dump() for msg in request.messages]
+    messages = []
+    messages.append(ChatMessage(role="system", content="你是法律问答助手lawGPT，你可以根据提供的知识回答法律问题，你需要在回答中扮演一名法律顾问").model_dump())
+    for msg in request.messages:
+        messages.append(msg.model_dump())
     logger.info(f'查询到的topk文档{docs}')
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
